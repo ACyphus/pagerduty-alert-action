@@ -9,6 +9,7 @@ async function sendAlert(alert) {
   if (response.status === 202) {
     console.log(`Successfully sent PagerDuty alert. Response: ${JSON.stringify(response.data)}`);
   } else {
+    console.log(`PagerDuty API returned status code ${response.status} - ${JSON.stringify(response.data)}`);
     core.setFailed(
       `PagerDuty API returned status code ${response.status} - ${JSON.stringify(response.data)}`
     );
@@ -28,9 +29,9 @@ async function sendAlert(alert) {
         severity: 'critical',
         custom_details: {
           run_details: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-          related_commits: context.payload.commits
-            ? context.payload.commits.map((commit) => `${commit.message}: ${commit.url}`).join(', ')
-            : 'No related commits',
+          // related_commits: context.payload.commits
+          //   ? context.payload.commits.map((commit) => `${commit.message}: ${commit.url}`).join(', ')
+          //   : 'No related commits',
         },
       },
       routing_key: integrationKey,
