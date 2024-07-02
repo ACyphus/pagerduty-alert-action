@@ -5,8 +5,12 @@ const axios = require('axios');
 // Trigger the PagerDuty webhook with a given alert
 async function sendAlert(alert) {
   core.info('Sending API call');
+  
+  const headers = {
+    'Content-Type': 'application/json',
+  };
 
-  const response = await axios.post('https://events.pagerduty.com/v2/enqueue', alert);
+  const response = await axios.post('https://events.pagerduty.com/v2/enqueue', alert, {headers: headers});
 
   if (response.status === 202) {
     core.info(`Successfully sent PagerDuty alert. Response: ${JSON.stringify(response.data)}`);
@@ -22,6 +26,8 @@ async function sendAlert(alert) {
 (async () => {
   const integrationKey = core.getInput('pagerduty-integration-key');
   core.info('Reading pagerduty-integration-key');
+  core.info(`${integrationKey.substring(0,5)}`);
+  core.info(`${integrationKey.substring(25,31)}`);
 
   let alert = {
     payload: {
@@ -31,11 +37,6 @@ async function sendAlert(alert) {
       severity: 'critical',
       custom_details: {
         run_details: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-        // note: not including commits in the message since it might be long and
-        // reach the text length limit
-        // related_commits: context.payload.commits
-        //   ? context.payload.commits.map((commit) => `${commit.message}: ${commit.url}`).join(', ')
-        //   : 'No related commits',
       },
     },
     routing_key: integrationKey,
