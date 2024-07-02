@@ -26,8 +26,8 @@ async function sendAlert(alert) {
 (async () => {
   const integrationKey = core.getInput('pagerduty-integration-key');
   core.info('Reading pagerduty-integration-key');
-  core.info(`${integrationKey.substring(0,5)}`);
-  core.info(`${integrationKey.substring(25,31)}`);
+  core.info(`${integrationKey.slice(6)}`);
+  core.info(`${integrationKey.slice(-5)}`);
 
   let alert = {
     payload: {
@@ -39,7 +39,7 @@ async function sendAlert(alert) {
         run_details: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
       },
     },
-    routing_key: integrationKey,
+    routing_key: integrationKey.substring(1),
     event_action: 'trigger',
   };
   core.info('Forming default request body');
