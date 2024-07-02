@@ -4,7 +4,10 @@ const axios = require('axios');
 
 // Trigger the PagerDuty webhook with a given alert
 async function sendAlert(alert) {
+  core.info('Sending API call');
+
   const response = await axios.post('https://events.pagerduty.com/v2/enqueue', alert);
+  core.info(`Response: ${JSON.stringify(response.data)}`);
 
   if (response.status === 202) {
     core.info(`Successfully sent PagerDuty alert. Response: ${JSON.stringify(response.data)}`);
@@ -20,6 +23,7 @@ async function sendAlert(alert) {
 (async () => {
   try {
     const integrationKey = core.getInput('pagerduty-integration-key');
+    core.info('Reading pagerduty-integration-key');
 
     let alert = {
       payload: {
@@ -29,6 +33,8 @@ async function sendAlert(alert) {
         severity: 'critical',
         custom_details: {
           run_details: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+          // note: not including commits in the message since it might be long and
+          // reach the text length limit
           // related_commits: context.payload.commits
           //   ? context.payload.commits.map((commit) => `${commit.message}: ${commit.url}`).join(', ')
           //   : 'No related commits',
@@ -37,6 +43,7 @@ async function sendAlert(alert) {
       routing_key: integrationKey,
       event_action: 'trigger',
     };
+    core.info('Forming default request body');
 
     const customSummary = core.getInput('incident-summary');
     if (customSummary != '') {
@@ -57,6 +64,8 @@ async function sendAlert(alert) {
     if (dedupKey != '') {
       alert.dedup_key = dedupKey;
     }
+    core.info('Customizing request body');
+
     await sendAlert(alert);
   } catch (error) {
     core.setFailed(error.message);
