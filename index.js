@@ -7,9 +7,9 @@ async function sendAlert(alert) {
   const response = await axios.post('https://events.pagerduty.com/v2/enqueue', alert);
 
   if (response.status === 202) {
-    console.log(`Successfully sent PagerDuty alert. Response: ${JSON.stringify(response.data)}`);
+    core.info(`Successfully sent PagerDuty alert. Response: ${JSON.stringify(response.data)}`);
   } else {
-    console.log(`PagerDuty API returned status code ${response.status} - ${JSON.stringify(response.data)}`);
+    core.error(`PagerDuty API returned status code ${response.status} - ${JSON.stringify(response.data)}`);
     core.setFailed(
       `PagerDuty API returned status code ${response.status} - ${JSON.stringify(response.data)}`
     );
