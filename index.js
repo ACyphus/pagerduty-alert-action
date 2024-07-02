@@ -26,8 +26,6 @@ async function sendAlert(alert) {
 (async () => {
   const integrationKey = core.getInput('pagerduty-integration-key');
   core.info('Reading pagerduty-integration-key');
-  core.info(`${integrationKey.slice(6)}`);
-  core.info(`${integrationKey.slice(-5)}`);
 
   let alert = {
     payload: {
