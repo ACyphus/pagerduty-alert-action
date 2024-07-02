@@ -1,0 +1,5 @@
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+### OWNER RULES
+# Default Catch All Rule
+*                               @persona-id/infrastructure @persona-id/security
