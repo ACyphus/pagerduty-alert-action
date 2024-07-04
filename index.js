@@ -29,7 +29,7 @@ async function sendAlert(alert) {
 
   let alert = {
     payload: {
-      summary: `New high urgency security report by @${context.actor}`,
+      summary: `New security report by @${context.actor}`,
       timestamp: new Date().toISOString(),
       source: 'GitHub Actions',
       severity: 'critical',
@@ -45,6 +45,11 @@ async function sendAlert(alert) {
   const customSummary = core.getInput('incident-summary');
   if (customSummary != '') {
     alert.payload.summary = customSummary;
+  }
+
+  const url = core.getInput('url');
+  if (region != '') {
+    alert.payload.custom_details.url = url;
   }
 
   const region = core.getInput('incident-region');
