@@ -37,9 +37,7 @@ async function sendAlert(alert) {
         run_details: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
       },
     },
-    // Not sure why we see an extra `$` sign at the front of the key, but
-    // skipping the first char here to make a correct API call.
-    routing_key: integrationKey.substring(1),
+    routing_key: integrationKey,
     event_action: 'trigger',
   };
   core.info('Forming default request body');
