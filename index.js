@@ -48,7 +48,7 @@ async function sendAlert(alert) {
   }
 
   const url = core.getInput('url');
-  if (region != '') {
+  if (url != '') {
     alert.payload.custom_details.url = url;
   }
 
