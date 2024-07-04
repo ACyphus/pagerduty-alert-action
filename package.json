@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/miparnisari/action-pagerduty-alert.git"
+    "url": "git+https://github.com/ACyphus/action-pagerduty-alert.git"
   },
   "keywords": [
     "PagerDuty",
@@ -17,9 +17,9 @@
   "author": "Maria Ines Parnisari <maineparnisari@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/miparnisari/action-pagerduty-alert/issues"
+    "url": "https://github.com/ACyphus/action-pagerduty-alert/issues"
   },
-  "homepage": "https://github.com/miparnisari/action-pagerduty-alert#readme",
+  "homepage": "https://github.com/ACyphus/action-pagerduty-alert#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
